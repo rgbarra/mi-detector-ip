@@ -87,7 +87,7 @@ function App() {
       {/* Renderizado Condicional: Si hay un error */}
       {error && <div className="error-message">❌ Error: {error}</div>}
 
-      {/* Renderizado Condicional: Resultados */}
+      {/* Renderizado Condicional: Resultados Enriquecidos */}
       {!loading && ipData && (
         <div className="card">
           <h2>
@@ -95,19 +95,30 @@ function App() {
           </h2>
           <hr style={{ borderColor: '#475569', margin: '1rem 0' }} />
           
-          <p><strong>Dirección IP:</strong> {ipData.ip}</p>
+          {/* Datos de Red */}
+          <p><strong>Dirección IP:</strong> <span style={{ color: 'var(--accent-color)' }}>{ipData.ip}</span></p>
           
+          {/* Datos de Ubicación Geográfica */}
           {ipData.location && (
             <>
-              <p><strong>País:</strong> {ipData.location.country} ({ipData.location.country_code})</p>
-              <p><strong>Ciudad:</strong> {ipData.location.city || 'No detectada'}</p>
-              <p><strong>Zona Horaria:</strong> {ipData.location.timezone}</p>
+              {/* Corregido: country_iso para que no salga el paréntesis vacío */}
+              <p><strong>País:</strong> {ipData.location.country} ({ipData.location.country_iso || 'N/A'})</p>
+              <p><strong>Ciudad / Región:</strong> {ipData.location.city || 'No especificada por el proveedor'}</p>
+              <p><strong>Zona Horaria:</strong> ⏰ {ipData.location.timezone}</p>
+              
+              {/* NUEVO: Coordenadas Geográficas (Latitud y Longitud) */}
+              <p><strong>Coordenadas (Lat, Lon):</strong> 🌐 {ipData.location.latitude}, {ipData.location.longitude}</p>
             </>
           )}
 
-          {ipData.autonomous_system && (
-            <p><strong>Organización / ISP:</strong> {ipData.autonomous_system.organization}</p>
-          )}
+          {/* Datos de Organización / ISP con alternativa si viene vacío */}
+          <p>
+            <strong>Organización / ISP:</strong>{' '}
+            {ipData.autonomous_system?.organization 
+              ? ipData.autonomous_system.organization 
+              : 'Red Privada / Proveedor Local No Registrado'} 
+            {ipData.autonomous_system?.asn && ` (ASN: AS${ipData.autonomous_system.asn})`}
+          </p>
         </div>
       )}
     </div>
