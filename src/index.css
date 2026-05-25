@@ -122,3 +122,51 @@ button:active {
   align-items: center;
   gap: 0.5rem;
 }
+
+/* ==========================================================================
+   MEDIA QUERIES - DISEÑO RESPONSIVE PARA EQUIPOS MÓVILES
+   ========================================================================== */
+
+/* Se activa cuando la pantalla mide 480px de ancho o menos (Celulares) */
+@media (max-width: 480px) {
+  #root {
+    padding: 1.5rem 1rem; /* Reducimos el margen externo para ganar pantalla */
+  }
+
+  header h1 {
+    font-size: 1.85rem !important; /* Achicamos el título para que no salte de línea bruscamente */
+  }
+
+  /* El buscador pasa de estar horizontal (flex) a apilarse verticalmente */
+  .search-box {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  input {
+    width: 100%;
+    box-sizing: border-box; /* Asegura que el padding no estire el input hacia afuera */
+  }
+
+  button {
+    width: 100%; /* Botón ancho completo, mucho más fácil de presionar con el pulgar */
+    padding: 0.85rem;
+  }
+
+  /* Hacemos la tarjeta interna un poco más compacta */
+  .card {
+    padding: 1.25rem;
+    border-radius: 12px;
+  }
+
+  /* Los items de información ganan un espacio más cómodo */
+  .info-item {
+    gap: 0.75rem;
+    padding: 0.6rem 0;
+  }
+  
+  .info-item strong {
+    font-size: 0.95rem; /* Ajuste sutil de texto para IPs largas */
+    word-break: break-all; /* Evita que IPs de formato IPv6 largo se salgan de la tarjeta */
+  }
+}
